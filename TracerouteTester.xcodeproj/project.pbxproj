@@ -24,6 +24,11 @@
 		70ED004616FA2A90002C7206 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70ED001E16FA2A8F002C7206 /* Foundation.framework */; };
 		70ED004E16FA2A90002C7206 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 70ED004C16FA2A90002C7206 /* InfoPlist.strings */; };
 		70ED005116FA2A90002C7206 /* TracerouteTesterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 70ED005016FA2A90002C7206 /* TracerouteTesterTests.m */; };
+		70ED006416FA2AB5002C7206 /* MMHostResolutionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 70ED005C16FA2AB5002C7206 /* MMHostResolutionOperation.m */; };
+		70ED006516FA2AB5002C7206 /* MMPingOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 70ED005E16FA2AB5002C7206 /* MMPingOperation.m */; };
+		70ED006616FA2AB5002C7206 /* MMTracerouteExecutor.m in Sources */ = {isa = PBXBuildFile; fileRef = 70ED006116FA2AB5002C7206 /* MMTracerouteExecutor.m */; };
+		70ED006716FA2AB5002C7206 /* IPPacketHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 70ED006316FA2AB5002C7206 /* IPPacketHelpers.m */; };
+		70ED006B16FA2AF0002C7206 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70ED006A16FA2AF0002C7206 /* CFNetwork.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +65,15 @@
 		70ED004D16FA2A90002C7206 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		70ED004F16FA2A90002C7206 /* TracerouteTesterTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TracerouteTesterTests.h; sourceTree = "<group>"; };
 		70ED005016FA2A90002C7206 /* TracerouteTesterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TracerouteTesterTests.m; sourceTree = "<group>"; };
+		70ED005B16FA2AB5002C7206 /* MMHostResolutionOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMHostResolutionOperation.h; sourceTree = "<group>"; };
+		70ED005C16FA2AB5002C7206 /* MMHostResolutionOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMHostResolutionOperation.m; sourceTree = "<group>"; };
+		70ED005D16FA2AB5002C7206 /* MMPingOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMPingOperation.h; sourceTree = "<group>"; };
+		70ED005E16FA2AB5002C7206 /* MMPingOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMPingOperation.m; sourceTree = "<group>"; };
+		70ED005F16FA2AB5002C7206 /* MMTracerouteDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMTracerouteDefines.h; sourceTree = "<group>"; };
+		70ED006016FA2AB5002C7206 /* MMTracerouteExecutor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMTracerouteExecutor.h; sourceTree = "<group>"; };
+		70ED006116FA2AB5002C7206 /* MMTracerouteExecutor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMTracerouteExecutor.m; sourceTree = "<group>"; };
+		70ED006316FA2AB5002C7206 /* IPPacketHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPPacketHelpers.m; sourceTree = "<group>"; };
+		70ED006A16FA2AF0002C7206 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70ED006B16FA2AF0002C7206 /* CFNetwork.framework in Frameworks */,
 				70ED001D16FA2A8F002C7206 /* UIKit.framework in Frameworks */,
 				70ED001F16FA2A8F002C7206 /* Foundation.framework in Frameworks */,
 				70ED002116FA2A8F002C7206 /* CoreGraphics.framework in Frameworks */,
@@ -89,6 +104,7 @@
 		70ED001016FA2A8F002C7206 = {
 			isa = PBXGroup;
 			children = (
+				70ED006A16FA2AF0002C7206 /* CFNetwork.framework */,
 				70ED002216FA2A8F002C7206 /* TracerouteTester */,
 				70ED004916FA2A90002C7206 /* TracerouteTesterTests */,
 				70ED001B16FA2A8F002C7206 /* Frameworks */,
@@ -119,6 +135,7 @@
 		70ED002216FA2A8F002C7206 /* TracerouteTester */ = {
 			isa = PBXGroup;
 			children = (
+				70ED005A16FA2AB5002C7206 /* Traceroute */,
 				70ED002B16FA2A8F002C7206 /* MMAppDelegate.h */,
 				70ED002C16FA2A8F002C7206 /* MMAppDelegate.m */,
 				70ED003416FA2A8F002C7206 /* MMViewController.h */,
@@ -161,6 +178,29 @@
 				70ED004C16FA2A90002C7206 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		70ED005A16FA2AB5002C7206 /* Traceroute */ = {
+			isa = PBXGroup;
+			children = (
+				70ED005B16FA2AB5002C7206 /* MMHostResolutionOperation.h */,
+				70ED005C16FA2AB5002C7206 /* MMHostResolutionOperation.m */,
+				70ED005D16FA2AB5002C7206 /* MMPingOperation.h */,
+				70ED005E16FA2AB5002C7206 /* MMPingOperation.m */,
+				70ED005F16FA2AB5002C7206 /* MMTracerouteDefines.h */,
+				70ED006016FA2AB5002C7206 /* MMTracerouteExecutor.h */,
+				70ED006116FA2AB5002C7206 /* MMTracerouteExecutor.m */,
+				70ED006216FA2AB5002C7206 /* Utils */,
+			);
+			path = Traceroute;
+			sourceTree = "<group>";
+		};
+		70ED006216FA2AB5002C7206 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				70ED006316FA2AB5002C7206 /* IPPacketHelpers.m */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -278,6 +318,10 @@
 				70ED002916FA2A8F002C7206 /* main.m in Sources */,
 				70ED002D16FA2A8F002C7206 /* MMAppDelegate.m in Sources */,
 				70ED003616FA2A8F002C7206 /* MMViewController.m in Sources */,
+				70ED006416FA2AB5002C7206 /* MMHostResolutionOperation.m in Sources */,
+				70ED006516FA2AB5002C7206 /* MMPingOperation.m in Sources */,
+				70ED006616FA2AB5002C7206 /* MMTracerouteExecutor.m in Sources */,
+				70ED006716FA2AB5002C7206 /* IPPacketHelpers.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
