@@ -11,12 +11,17 @@
 #import "MMPingOperation.h"
 
 @class MMTracerouteExecutor;
+@class MMTracerouteStep;
+
+#define MMTracerouteStepFailedStepDataErrorKey @"MMTracerouteStepFailedStepDataErrorKey"
 
 @protocol MMTracerouteExecutorDelegate <NSObject>
 @optional
 - (void)tracerouteExecutor:(MMTracerouteExecutor *)executor startedPingingWithTTL:(NSNumber *)ttl;
+- (void)tracerouteExecutor:(MMTracerouteExecutor *)executor traceRouteStepDone:(MMTracerouteStep *)step;
 @required
 - (void)tracerouteExecutor:(MMTracerouteExecutor *)executor endedTracerouteWithSteps:(NSArray *)parrTracerouteSteps;
+- (void)tracerouteExecutor:(MMTracerouteExecutor *)executor tracerouteFailed:(NSError *)error;
 @end
 
 

@@ -78,23 +78,19 @@
     self.pingOperation = operation;
     self.pingOperation.delegate = self;
     NSNumber * number = [self getCurrentTTL];
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if(self.delegate && [self.delegate respondsToSelector:@selector(tracerouteExecutor:startedPingingWithTTL:)]) {
-            [self.delegate tracerouteExecutor:self startedPingingWithTTL:number];
-        }
-    });
-    
+        
     [self.pingOperation beginPingWithTtl:number];
 }
 
 -(void)pingOperation:(MMPingOperation *)po errorSendingPacket:(NSData *)packet withError:(NSError *)error {
     [self.pingOperation cancel];
     [self setPingOperation:nil];
+    
+    [self.delegate tracerouteExecutor:self tracerouteFailed:error];
 }
 
 - (void)pingOperation:(MMPingOperation *)po didSendPacket:(NSData *)packet {
-    
+    NSLog(@"Send data...");
 }
 
 - (void)pingOperation:(MMPingOperation *)po didRecieveResponse:(NSData *)packet withPingResult:(MMPingOperationData *)status {
@@ -116,6 +112,11 @@
     switch (status.status) {
         case kICMPTimeExceeded: {
             self.pingOperation = nil;
+            
+            if(self.delegate != nil && [self.delegate respondsToSelector:@selector(tracerouteExecutor:traceRouteStepDone:)]) {
+                [self.delegate tracerouteExecutor:self traceRouteStepDone:step];
+            }
+            
             [self _startPing];
         }
             break;
@@ -128,6 +129,8 @@
             break;
         case kICMPInvalid:
             NSLog(@"Failed on %d hop.", self.hop);
+            [self.delegate tracerouteExecutor:self tracerouteFailed:[NSError errorWithDomain:[NSString stringWithFormat:@"Traceroute failed on %@ with TTL %d", step.recieverAddress,step.ttl] code:-1337 userInfo:@{MMTracerouteStepFailedStepDataErrorKey:step}]];
+            [self abort];
         default:
             break;
     }

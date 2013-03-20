@@ -443,7 +443,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TracerouteTester/TracerouteTester-Prefix.pch";
 				INFOPLIST_FILE = "TracerouteTester/TracerouteTester-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -454,7 +456,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TracerouteTester/TracerouteTester-Prefix.pch";
 				INFOPLIST_FILE = "TracerouteTester/TracerouteTester-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -512,6 +516,7 @@
 				70ED005616FA2A90002C7206 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		70ED005716FA2A90002C7206 /* Build configuration list for PBXNativeTarget "TracerouteTesterTests" */ = {
 			isa = XCConfigurationList;
@@ -520,6 +525,7 @@
 				70ED005916FA2A90002C7206 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -214,6 +214,9 @@ uint16_t in_cksum(const void *buffer, size_t bufferLen);
 }
 
 - (void)_readDataFromSocket:(CFSocketRef) socketRef {
+    
+    NSLog(@"Read socket data...");
+    
     int                     err;
     struct sockaddr_storage addr;
     socklen_t               addrLen;
