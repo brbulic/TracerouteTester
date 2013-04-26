@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D5D95D51726B38F00994ECE /* BBHostInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D5D95D41726B38F00994ECE /* BBHostInfo.m */; };
+		0D5D95D91726D81D00994ECE /* BBNetworkHeaders.c in Sources */ = {isa = PBXBuildFile; fileRef = 0D5D95D81726D81D00994ECE /* BBNetworkHeaders.c */; };
 		70ED001D16FA2A8F002C7206 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70ED001C16FA2A8F002C7206 /* UIKit.framework */; };
 		70ED001F16FA2A8F002C7206 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70ED001E16FA2A8F002C7206 /* Foundation.framework */; };
 		70ED002116FA2A8F002C7206 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70ED002016FA2A8F002C7206 /* CoreGraphics.framework */; };
@@ -42,6 +44,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0D5D95D31726B38F00994ECE /* BBHostInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBHostInfo.h; sourceTree = "<group>"; };
+		0D5D95D41726B38F00994ECE /* BBHostInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BBHostInfo.m; sourceTree = "<group>"; };
+		0D5D95D71726D80E00994ECE /* BBNetworkHeaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BBNetworkHeaders.h; sourceTree = "<group>"; };
+		0D5D95D81726D81D00994ECE /* BBNetworkHeaders.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = BBNetworkHeaders.c; sourceTree = "<group>"; };
 		70ED001916FA2A8F002C7206 /* TracerouteTester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TracerouteTester.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70ED001C16FA2A8F002C7206 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		70ED001E16FA2A8F002C7206 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -183,11 +189,13 @@
 		70ED005A16FA2AB5002C7206 /* Traceroute */ = {
 			isa = PBXGroup;
 			children = (
+				70ED005F16FA2AB5002C7206 /* MMTracerouteDefines.h */,
+				0D5D95D71726D80E00994ECE /* BBNetworkHeaders.h */,
+				0D5D95D81726D81D00994ECE /* BBNetworkHeaders.c */,
 				70ED005B16FA2AB5002C7206 /* MMHostResolutionOperation.h */,
 				70ED005C16FA2AB5002C7206 /* MMHostResolutionOperation.m */,
 				70ED005D16FA2AB5002C7206 /* MMPingOperation.h */,
 				70ED005E16FA2AB5002C7206 /* MMPingOperation.m */,
-				70ED005F16FA2AB5002C7206 /* MMTracerouteDefines.h */,
 				70ED006016FA2AB5002C7206 /* MMTracerouteExecutor.h */,
 				70ED006116FA2AB5002C7206 /* MMTracerouteExecutor.m */,
 				70ED006216FA2AB5002C7206 /* Utils */,
@@ -199,6 +207,8 @@
 			isa = PBXGroup;
 			children = (
 				70ED006316FA2AB5002C7206 /* IPPacketHelpers.m */,
+				0D5D95D31726B38F00994ECE /* BBHostInfo.h */,
+				0D5D95D41726B38F00994ECE /* BBHostInfo.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -322,6 +332,8 @@
 				70ED006516FA2AB5002C7206 /* MMPingOperation.m in Sources */,
 				70ED006616FA2AB5002C7206 /* MMTracerouteExecutor.m in Sources */,
 				70ED006716FA2AB5002C7206 /* IPPacketHelpers.m in Sources */,
+				0D5D95D51726B38F00994ECE /* BBHostInfo.m in Sources */,
+				0D5D95D91726D81D00994ECE /* BBNetworkHeaders.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

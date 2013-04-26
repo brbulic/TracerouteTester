@@ -49,24 +49,33 @@ check_compile_time(offsetof(IPHeader, headerChecksum) == 10);
 check_compile_time(offsetof(IPHeader, sourceAddress) == 12);
 check_compile_time(offsetof(IPHeader, destinationAddress) == 16);
 
-typedef enum {
-    kICMPPingValid = 1,
-    kICMPTimeExceeded = 99,
-    kICMPInvalid = 0,
-} ResponsePacketStatus;
 
 // ICMP type and code combinations:
+enum {
+    kICMPTypeEchoReply   = 0,               // code is always 0
+    kICMPTypeDestinationUnreachable = 3,
+    kICMPTypeEchoRequest = 8,               // code is always 0
+    kICMPTypeTimeExceeded = 11,
+};
 
 enum {
-    kICMPTypeEchoReply   = 0,           // code is always 0
-    kICMPTypeEchoRequest = 8,            // code is always 0
-    kIMCPTypeTimeExceeded = 11,
+    kICMPCodeTimeExceededTTLExpired                 = 0,
+    kICMPCodeTimeExceededFragmentReassemblyExceeded = 1
 };
 
 enum {
     kICMPCodeDefault = 0,
     kICMPCodeFragmentTimeExceeded = 1,
 };
+
+// API Wrapper
+typedef enum {
+    kICMPPingValid = kICMPTypeEchoReply,
+    kICMPTimeExceeded = kICMPTypeTimeExceeded,
+    kICMPDestinationUnreachable = kICMPTypeDestinationUnreachable,
+    kICMPPacketNotFound = -666,
+    kICMPInvalid = INT_MIN,
+} ResponsePacketStatus;
 
 // ICMP header structure:
 struct ICMPHeader {

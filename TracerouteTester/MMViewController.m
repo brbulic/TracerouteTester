@@ -66,9 +66,9 @@
         [self.executor begin];
         
         self.statusMessage = [NSMutableString stringWithFormat:@"Started ping with steps:"];
+        
+        self.hostnameField.enabled = NO;
+        self.confirmButton.enabled = NO;
     }
-    
-    self.hostnameField.enabled = NO;
-    self.confirmButton.enabled = NO;
 }
 @end

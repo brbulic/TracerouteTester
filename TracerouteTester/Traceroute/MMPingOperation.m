@@ -89,8 +89,10 @@ uint16_t in_cksum(const void *buffer, size_t bufferLen);
             }
         } break;
         case AF_INET6:
-            assert(NO);
-            // let's not support IPv6
+            fileDescriptor = socket(AF_INET6, SOCK_DGRAM, IPPROTO_ICMPV6);
+            if (fileDescriptor < 0) {
+                err = errno;
+            }
         default: {
             err = EPROTONOSUPPORT;
         } break;
@@ -263,6 +265,7 @@ uint16_t in_cksum(const void *buffer, size_t bufferLen);
             case kICMPInvalid:
                 NSLog(@"Tough luck, your life sucks!");
             default:
+                NSLog(@"What protocol is this? %d", responsePacketStatus);
                 break;
         }
         
@@ -360,6 +363,7 @@ uint16_t in_cksum(const void *buffer, size_t bufferLen);
         calculatedChecksum = in_cksum(icmpPtr, [packet length] - icmpHeaderOffset);
         icmpPtr->checksum  = receivedChecksum;
         
+        NSLog(@"ICMP Response type: %d, code: %d", icmpPtr->type, icmpPtr->code);
         
         switch (icmpPtr->type) {
             case kICMPTypeEchoReply: {
@@ -374,16 +378,25 @@ uint16_t in_cksum(const void *buffer, size_t bufferLen);
                 }
             }
                 break;
-            case kIMCPTypeTimeExceeded:
+            case kICMPTypeTimeExceeded:
             {
                 if (icmpPtr->code == kICMPCodeDefault) {
                     result = kICMPTimeExceeded;
                 }
+                else if (icmpPtr->code == kICMPCodeTimeExceededFragmentReassemblyExceeded) {
+                    result = kICMPTimeExceeded; // weird situation, but it's still TE
+                }
             }
                 break;
+            case kICMPTypeDestinationUnreachable:
+                result = kICMPDestinationUnreachable; // not a pretty thing
+                break;
             default:
+                result = kICMPInvalid;
                 break;
         }
+    } else {
+        result = kICMPPacketNotFound;
     }
     
     return result;
@@ -477,7 +490,6 @@ uint16_t in_cksum(const void *buffer, size_t bufferLen)
 @implementation MMPingOperationData
 
 - (void)dealloc {
-    [self destinationComputer];
 }
 
 @end

@@ -27,7 +27,7 @@
 
 @interface MMTracerouteExecutor : NSObject<MMPingOperationDelegate>
 
-@property (nonatomic, readonly) NSString * hostName;
+@property (nonatomic, readonly) NSString * host; // could be a name or an address
 @property (nonatomic, unsafe_unretained) id<MMTracerouteExecutorDelegate> delegate;
 
 - (id)initWithHostname:(NSString *)hn;
@@ -40,6 +40,7 @@
 @interface MMTracerouteStep : NSObject
 
 @property (nonatomic, assign) uint32_t ttl;
+@property (nonatomic, strong) NSString * recieverHostName;
 @property (nonatomic, strong) NSString * recieverAddress;
 @property (nonatomic, assign) NSTimeInterval pingDuration;
 

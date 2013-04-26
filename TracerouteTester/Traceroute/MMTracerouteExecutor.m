@@ -26,6 +26,14 @@
 
 @end
 
+@interface MMTracerouteStep ()
+
+@property (nonatomic, strong) MMHostResolutionOperation * myOp;
+- (void)resloveAllData;
+
+@end
+
+
 @implementation MMTracerouteExecutor {
     NSUInteger hostResolveFailCount;
 }
@@ -34,7 +42,7 @@
 {
     self = [super init];
     if (self) {
-        _hostName = hn;
+        _host = hn;
         self.pingSteps = [NSMutableArray array];
         self.hop = 0;
     }
@@ -57,11 +65,11 @@
         return;
     }
     
-    MMHostResolutionOperation * currentOperation = [[MMHostResolutionOperation alloc] initWithHostName:self.hostName];
+    MMHostResolutionOperation * currentOperation = [[MMHostResolutionOperation alloc] initWithHostName:self.host];
     
     self.currentOperation = currentOperation;
     
-    [self.currentOperation startWithCallback:^(NSArray *ipAdressesInNSString, NSTimeInterval resolutionDurationSeconds) {
+    [self.currentOperation startWithCallback:^(BBHostInfoResolutionType resolveType, NSArray *resolveData, NSTimeInterval resolutionDurationSeconds) {
         [self onSuccess];
     }];
 }
@@ -70,10 +78,9 @@
     return [NSNumber numberWithInt:++self.hop];
 }
 
-
 - (void)_startPing {
     
-    MMPingOperation * operation = [[MMPingOperation alloc] initWithHostAddress:self.currentOperation.hostAddress];
+    MMPingOperation * operation = [[MMPingOperation alloc] initWithHostAddress:self.currentOperation.sockaddrBytes];
     
     self.pingOperation = operation;
     self.pingOperation.delegate = self;
@@ -96,15 +103,13 @@
 - (void)pingOperation:(MMPingOperation *)po didRecieveResponse:(NSData *)packet withPingResult:(MMPingOperationData *)status {
     
     MMTracerouteStep * step = [[MMTracerouteStep alloc] init];
+    step.ttl = self.hop;
+    step.pingDuration = status.pingDuration;
     
     if(status.status != kICMPInvalid) {
-        step.ttl = self.hop;
         step.recieverAddress = [status.destinationComputer substringToIndex:(status.destinationComputer.length-1)];
-        step.pingDuration = status.pingDuration;
-
     } else {
-        step.ttl = INT_MIN;
-        step.recieverAddress = nil;
+        step.recieverAddress = @"Unknown";
     }
     
     [self.pingSteps addObject:step];
@@ -121,12 +126,17 @@
         }
             break;
         case kICMPPingValid: {
-            
             if(self.delegate && [self.delegate respondsToSelector:@selector(tracerouteExecutor:endedTracerouteWithSteps:)]) {
                 [self.delegate tracerouteExecutor:self endedTracerouteWithSteps:self.pingSteps];
             }
         }
             break;
+        case kICMPDestinationUnreachable: {
+            // by UNIX definition this is the end of the traceroute.
+            if (self.delegate && [self.delegate respondsToSelector:@selector(tracerouteExecutor:traceRouteStepDone:)]) {
+                [self.delegate tracerouteExecutor:self endedTracerouteWithSteps:self.pingSteps];
+            }
+        }
         case kICMPInvalid:
             NSLog(@"Failed on %d hop.", self.hop);
             [self.delegate tracerouteExecutor:self tracerouteFailed:[NSError errorWithDomain:[NSString stringWithFormat:@"Traceroute failed on %@ with TTL %d", step.recieverAddress,step.ttl] code:-1337 userInfo:@{MMTracerouteStepFailedStepDataErrorKey:step}]];
@@ -159,5 +169,18 @@
 
 @implementation MMTracerouteStep
 
+- (void)resloveAllData {
+    if(self.recieverAddress != nil) {
+        self.myOp = [[MMHostResolutionOperation alloc] initWithHostName:self.recieverAddress];
+        
+        [self.myOp startWithCallback:^(BBHostInfoResolutionType resolveType, NSArray *resolveData, NSTimeInterval resolutionDurationSeconds) {
+            
+            if(resolveType == kBBHostInfoResolutionTypeNames) {
+                self.recieverAddress = (NSString *)[resolveData objectAtIndex:0];
+                [self setMyOp:nil];
+            }
+        }];
+    }
+}
 
 @end

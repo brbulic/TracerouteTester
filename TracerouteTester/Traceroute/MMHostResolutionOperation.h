@@ -8,17 +8,27 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void(^MMHostResolutionOperationCallback)(NSArray * ipAdressesInNSString, NSTimeInterval resolutionDurationSeconds);
+typedef enum {
+    kBBHostInfoResolutionTypeNames,
+    kBBHostInfoResolutionTypeAddresses,
+    kBBHostInfoResolutionTypeUnknown
+} BBHostInfoResolutionType;
+
+@class BBHostInfo;
+
+typedef void(^MMHostResolutionOperationCallback)(BBHostInfoResolutionType resolveType, NSArray * resolveData, NSTimeInterval resolutionDurationSeconds);
 
 @interface MMHostResolutionOperation : NSObject
 
 - (id)initWithHostName:(NSString *)hostname;
 
-@property (weak, nonatomic, readonly) NSString * hostName;
 @property (nonatomic, readonly) BOOL isResolved;
+@property (nonatomic, readonly) BBHostInfo * hostInformation;
 
-@property (weak, nonatomic, readonly) NSData* hostAddress;
-@property (weak, nonatomic, readonly) NSArray * ipStrings;
+@property (nonatomic, readonly) NSData* sockaddrBytes;
+
+@property (nonatomic, readonly) NSArray * ipStrings;
+@property (nonatomic, readonly) NSArray * hostNames;
 
 - (void)startWithCallback:(MMHostResolutionOperationCallback)operation;
 

@@ -8,12 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "MMTracerouteExecutor.h"
+#import "MMHostResolutionOperation.h"
 
 @interface MMViewController : UIViewController<MMTracerouteExecutorDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *hostnameField;
 @property (weak, nonatomic) IBOutlet UIButton *confirmButton;
 @property (weak, nonatomic) IBOutlet UITextView *resultTestView;
+
+@property (nonatomic, strong) MMHostResolutionOperation * op;
 
 - (IBAction)buttonTapped:(id)sender;
 
