@@ -29,7 +29,8 @@
 @interface MMTracerouteStep ()
 
 @property (nonatomic, strong) MMHostResolutionOperation * myOp;
-- (void)resloveAllData;
+
+- (void)resloveAllDataWithCallback:(void(^)())callback;
 
 @end
 
@@ -108,6 +109,11 @@
     
     if(status.status != kICMPInvalid) {
         step.recieverAddress = [status.destinationComputer substringToIndex:(status.destinationComputer.length-1)];
+	    [step resloveAllDataWithCallback:^{
+		    
+		    
+	    }];
+	    
     } else {
         step.recieverAddress = @"Unknown";
     }
@@ -169,17 +175,21 @@
 
 @implementation MMTracerouteStep
 
-- (void)resloveAllData {
+- (void)resloveAllDataWithCallback:(void (^)())callback  {
     if(self.recieverAddress != nil) {
         self.myOp = [[MMHostResolutionOperation alloc] initWithHostName:self.recieverAddress];
         
-        [self.myOp startWithCallback:^(BBHostInfoResolutionType resolveType, NSArray *resolveData, NSTimeInterval resolutionDurationSeconds) {
-            
-            if(resolveType == kBBHostInfoResolutionTypeNames) {
-                self.recieverAddress = (NSString *)[resolveData objectAtIndex:0];
-                [self setMyOp:nil];
-            }
-        }];
+	    __block id me = self;
+	    
+	    [self.myOp startWithCallback:^(BBHostInfoResolutionType resolveType, NSArray *resolveData, NSTimeInterval resolutionDurationSeconds) {
+		    
+		    if(resolveType == kBBHostInfoResolutionTypeNames) {
+			    self.recieverAddress = (NSString *)[resolveData objectAtIndex:0];
+			    NSLog(@"Reciever address is: %@", self.recieverAddress);
+		    }
+		    [me setMyOp:nil];
+		    callback();
+	    }];
     }
 }
 
